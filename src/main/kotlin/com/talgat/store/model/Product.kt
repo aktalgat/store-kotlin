@@ -10,4 +10,6 @@ data class Product(
         val badge: String,
         val price: Double,
         val priceOld: Double,
-        val stars: Int)
+        val stars: Int,
+        val productImageList: List<ProductImage>
+)
