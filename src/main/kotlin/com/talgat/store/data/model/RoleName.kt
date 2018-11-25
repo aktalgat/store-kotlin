@@ -1,4 +1,4 @@
-package com.talgat.store.model
+package com.talgat.store.data.model
 
 enum class RoleName {
     ROLE_USER,

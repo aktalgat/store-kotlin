@@ -1,4 +1,4 @@
-package com.talgat.store.model
+package com.talgat.store.data.model
 
 data class Product(
         val id: Long,
