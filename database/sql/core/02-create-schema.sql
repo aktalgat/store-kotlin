@@ -10,11 +10,11 @@ CREATE SEQUENCE core.users_seq INCREMENT 1 MINVALUE 3 MAXVALUE 92233720368547758
 
 CREATE TABLE core.users(
   id BIGINT DEFAULT nextval('core.users_seq') NOT NULL,
-  password VARCHAR(500),
+  phone VARCHAR(20),
+  email VARCHAR(100),
   first_name VARCHAR(100),
   last_name VARCHAR(100),
-  email VARCHAR(100),
-  phone_number VARCHAR(20),
+  password VARCHAR(100),
   enabled BOOLEAN,
 
   CONSTRAINT pk_users PRIMARY KEY(id)
