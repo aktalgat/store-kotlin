@@ -3,7 +3,6 @@ package com.talgat.store.data.dao
 import com.talgat.store.data.model.User
 import org.springframework.stereotype.Repository
 
-@Repository
 interface UserRepository {
     fun findByEmail(email: String): User?
 
