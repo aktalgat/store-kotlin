@@ -1,0 +1,32 @@
+#!/usr/bin/env sh
+
+# run example:
+# ./runscript store "/home/talgat/projects/java/store-kotlin/database/sql" > scripts.log 2>&1
+
+dbname=$1
+scriptroot=$2
+
+if [ -z "$dbname" ]
+then exit 1
+fi
+
+if [ -z "$scriptroot" ]
+then exit 1
+fi
+
+sudo su - postgres -c "psql -U postgres $dbname -c \"SELECT pg_terminate_backend(pid) FROM pg_stat_activity
+    WHERE datname = '$dbname';\""
+sudo su - postgres -c "dropdb $dbname"
+
+sudo su - postgres -c "echo \"$dbname\""
+
+sudo su - postgres -c "psql -U postgres -c \"\i $scriptroot/core/01-create-db.sql\""
+sudo su - postgres -c "psql -U postgres $dbname -c \"\i $scriptroot/core/02-create-schema.sql\""
+
+for file in $(find $scriptroot/initial-data -name '*.sql' | sort)
+do
+    sudo su - postgres -c "echo $'\n --------------------------------------------------------------- \n'"
+    sudo su - postgres -c "echo $'\"$file\" \n'"
+    sudo su - postgres -c "echo $'\n --------------------------------------------------------------- \n'"
+    sudo su - postgres -c "psql -U postgres $dbname -c \"\i $file\""
+done
