@@ -2,9 +2,11 @@ package com.talgat.store.data.model
 
 data class User(
         val id: Long,
-        val name: String,
-        val username: String,
+        val phone: String,
         val email: String,
+        val firstName: String,
+        val lastName: String,
         val password: String,
-        val roles: Set<Role>
+        val enabled: Boolean,
+        val roles: List<Role>
 )
