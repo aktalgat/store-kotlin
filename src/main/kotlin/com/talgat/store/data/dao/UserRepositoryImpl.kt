@@ -16,7 +16,7 @@ class UserRepositoryImpl(val jdbcTemplate: JdbcTemplate) : UserRepository {
     private val roleQuery = "SELECT r.id, r.name FROM core.user_roles ur INNER JOIN core.roles r on ur.role_id=r.id"
 
     override fun findByPhone(phone: String): User? {
-        val userList : List<User> = jdbcTemplate.query("$userQuery where u.phone=?", arrayOf<Any>(phone)) {rs, _ ->
+        val userList : List<User> = jdbcTemplate.query("$userQuery where phone=?", arrayOf<Any>(phone)) {rs, _ ->
             User(rs.getLong("id"), rs.getString("phone"), rs.getString("email"),
                     rs.getString("first_name"), rs.getString("last_name"), rs.getString("password"),
                     rs.getBoolean("enabled"), ArrayList()) }
