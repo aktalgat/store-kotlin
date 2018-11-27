@@ -5,7 +5,7 @@ set dbname=%1
 set pass=%2
 
 set path=%~dp0
-set scriptpath=%mypath:~0,-1%
+set scriptpath=%path:~0,-1%
 
 if [%1]==[] goto finish
 if [%2]==[] goto finish
