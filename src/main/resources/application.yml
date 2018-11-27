@@ -1,7 +1,2 @@
-server:
-  port: 8090
 app:
   name: Store
-  jwtSecret: JWTSuperSecretKeyJWTSuperSecretKeyJWTSuperSecretKey
-  jwtExpirationInMs: 604800000
-  origin: http://localhost:3000
