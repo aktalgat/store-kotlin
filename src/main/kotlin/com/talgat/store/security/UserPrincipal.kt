@@ -41,8 +41,8 @@ class UserPrincipal(
 
             return UserPrincipal(
                     user.id,
-                    user.name,
-                    user.username,
+                    user.firstName + " " + user.lastName,
+                    user.phone,
                     user.email,
                     user.password,
                     authorities
