@@ -1,13 +1,14 @@
 echo off
-REM runscript.bat store C:\\Users\\talgat\\projects\\java\\store-kotlin\\database\\sql superpass > log.txt 2>&1
+REM runscript.bat store superpass > log.txt 2>&1
 
 set dbname=%1
-set scriptroot=%2
-set pass=%3%
+set pass=%2
+
+set path=%~dp0
+set scriptpath=%mypath:~0,-1%
 
 if [%1]==[] goto finish
 if [%2]==[] goto finish
-if [%3]==[] goto finish
 
 echo dbname %dbname%
 
@@ -20,10 +21,10 @@ setlocal enabledelayedexpansion
 
 "%pgpath%\dropdb.exe" -U postgres  %dbname%
 
-"%pgpath%\psql.exe" -U postgres -c "\i '%scriptroot%/core/01-create-db.sql'"
-"%pgpath%\psql.exe" -U postgres -d %dbname% -c "\i '%scriptroot%/core/02-create-schema.sql'"
+"%pgpath%\psql.exe" -U postgres -c "\i '%scriptpath%/core/01-create-db.sql'"
+"%pgpath%\psql.exe" -U postgres -d %dbname% -c "\i '%scriptpath%/core/02-create-schema.sql'"
 
-for /R %scriptroot%\\initial-data\\ %%f in (*.sql) do (
+for /R %scriptpath%\\initial-data\\ %%f in (*.sql) do (
 	set var=%%f
     set var1=!var:\=\\!
     echo ---------------------------------------------------------------
