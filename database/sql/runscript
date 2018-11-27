@@ -5,8 +5,8 @@
 
 dbname=$1
 
-script=$(readlink -f $0)
-scriptpath=`dirname $SCRIPT`
+#script=$(readlink -f $0)
+scriptpath="$(dirname -- "$(readlink -f -- "$0")")"
 
 if [ -z "$dbname" ]
 then exit 1
@@ -18,10 +18,10 @@ sudo su - postgres -c "dropdb $dbname"
 
 sudo su - postgres -c "echo \"$dbname\""
 
-sudo su - postgres -c "psql -U postgres -c \"\i scriptpath/core/01-create-db.sql\""
-sudo su - postgres -c "psql -U postgres $dbname -c \"\i scriptpath/core/02-create-schema.sql\""
+sudo su - postgres -c "psql -U postgres -c \"\i $scriptpath/core/01-create-db.sql\""
+sudo su - postgres -c "psql -U postgres $dbname -c \"\i $scriptpath/core/02-create-schema.sql\""
 
-for file in $(find scriptpath/initial-data -name '*.sql' | sort)
+for file in $(find $scriptpath/initial-data -name '*.sql' | sort)
 do
     sudo su - postgres -c "echo $'\n --------------------------------------------------------------- \n'"
     sudo su - postgres -c "echo $'\"$file\" \n'"
