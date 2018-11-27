@@ -1,16 +1,14 @@
 #!/usr/bin/env sh
 
 # run example:
-# ./runscript store "/home/talgat/projects/java/store-kotlin/database/sql" > scripts.log 2>&1
+# ./runscript store > scripts.log 2>&1
 
 dbname=$1
-scriptroot=$2
+
+script=$(readlink -f $0)
+scriptpath=`dirname $SCRIPT`
 
 if [ -z "$dbname" ]
-then exit 1
-fi
-
-if [ -z "$scriptroot" ]
 then exit 1
 fi
 
@@ -20,10 +18,10 @@ sudo su - postgres -c "dropdb $dbname"
 
 sudo su - postgres -c "echo \"$dbname\""
 
-sudo su - postgres -c "psql -U postgres -c \"\i $scriptroot/core/01-create-db.sql\""
-sudo su - postgres -c "psql -U postgres $dbname -c \"\i $scriptroot/core/02-create-schema.sql\""
+sudo su - postgres -c "psql -U postgres -c \"\i scriptpath/core/01-create-db.sql\""
+sudo su - postgres -c "psql -U postgres $dbname -c \"\i scriptpath/core/02-create-schema.sql\""
 
-for file in $(find $scriptroot/initial-data -name '*.sql' | sort)
+for file in $(find scriptpath/initial-data -name '*.sql' | sort)
 do
     sudo su - postgres -c "echo $'\n --------------------------------------------------------------- \n'"
     sudo su - postgres -c "echo $'\"$file\" \n'"
