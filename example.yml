@@ -6,7 +6,7 @@ spring:
     portNumber: 5432
     serverName: localhost
     driverClassName: "org.postgresql.Driver"
-    jdbcUrl: "jdbc:postgresql://127.0.0.1/store"
+    url: "jdbc:postgresql://127.0.0.1/store"
     username: postgres
     password: "superpass"
     minimumIdle: 10
@@ -15,7 +15,7 @@ spring:
     initializationFailFast: true
     maxLifetime: 1800000
     type: com.zaxxer.hikari.HikariDataSource
-jwt:
+app:
   jwtSecret: secretkey
   jwtExpirationInMs: 604800000
   origin: http://localhost:3000
