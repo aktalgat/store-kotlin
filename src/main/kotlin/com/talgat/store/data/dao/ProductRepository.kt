@@ -4,4 +4,5 @@ import com.talgat.store.data.model.Product
 
 interface ProductRepository {
     fun findAll(): List<Product>
+    fun save(product: Product): Product
 }
