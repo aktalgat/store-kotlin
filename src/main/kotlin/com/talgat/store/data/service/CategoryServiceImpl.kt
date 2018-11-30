@@ -22,7 +22,7 @@ class CategoryServiceImpl(val categoryRepository: CategoryRepository) : Category
     }
 
     override fun saveCategory(category: Category): Category {
-        var newCategory: Category? = null
+        var newCategory: Category?
         try {
             newCategory = categoryRepository.save(category)
         } catch (e: Exception) {
