@@ -15,7 +15,7 @@ class CategoryPublicController(private val categoryService: CategoryService) : A
     }
 
     @GetMapping("/categories")
-    fun getCategoryList(): List<Category> {
+    fun getCategoryPublicList(): List<Category> {
         log.info("Public api. Request for getting all categories")
 
         return categoryService.getCategoryList()

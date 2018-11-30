@@ -15,7 +15,7 @@ class ProductPublicController(private val productService: ProductService) : Abst
     }
 
     @GetMapping("/products")
-    fun getProductList() : List<Product> {
+    fun getProductPublicList() : List<Product> {
         log.info("Public api. Request for getting all products")
 
         return productService.getProductList()
