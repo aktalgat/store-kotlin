@@ -21,7 +21,7 @@ class UserRepositoryImpl(val jdbcTemplate: JdbcTemplate) : UserRepository {
                     rs.getString("first_name"), rs.getString("last_name"), rs.getString("password"),
                     rs.getBoolean("enabled"), ArrayList()) }
 
-        if (!userList.isEmpty()) return null
+        if (userList.isEmpty()) return null
 
         val roleList: List<Role> = jdbcTemplate.query("$roleQuery where ur.user_id=?", arrayOf<Any>(userList[0].id)) {
             rs, _ -> Role(rs.getLong("id"), RoleName.valueOf(rs.getString("name")))

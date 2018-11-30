@@ -3,10 +3,7 @@ package com.talgat.store.data.dao
 import com.talgat.store.data.model.User
 
 interface UserRepository {
-
     fun findByPhone(phone: String): User?
-
     fun findById(id: Long) : User?
-
     fun save(user: User)
 }
