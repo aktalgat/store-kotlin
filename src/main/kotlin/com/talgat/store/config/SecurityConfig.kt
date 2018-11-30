@@ -30,8 +30,8 @@ class SecurityConfig(private val customUserDetailsService: CustomUserDetailsServ
     private val origin: String? = null
 
     @Throws(Exception::class)
-    public override fun configure(authenticationManagerBuilder: AuthenticationManagerBuilder?) {
-        authenticationManagerBuilder!!
+    public override fun configure(authenticationManagerBuilder: AuthenticationManagerBuilder) {
+        authenticationManagerBuilder
                 .userDetailsService(customUserDetailsService)
                 .passwordEncoder(passwordEncoder())
     }
@@ -85,7 +85,6 @@ class SecurityConfig(private val customUserDetailsService: CustomUserDetailsServ
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-
                 .antMatchers("/",
                         "/favicon.ico",
                         "/**/*.png",

@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Repository
 @Transactional
-class ProductRepositoryImpl(val jdbcTemplate: JdbcTemplate) : ProductRepository {
+class ProductRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : ProductRepository {
     override fun save(product: Product): Product {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

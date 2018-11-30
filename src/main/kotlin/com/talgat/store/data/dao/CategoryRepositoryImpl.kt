@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional
 
 @Repository
 @Transactional
-class CategoryRepositoryImpl(val jdbcTemplate: JdbcTemplate) : CategoryRepository {
+class CategoryRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CategoryRepository {
     override fun findAll(): List<Category> {
         TODO("not implemented")
     }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-class CategoryProtectedController(val categoryService: CategoryService) : AbstractProtectedApi() {
+class CategoryProtectedController(private val categoryService: CategoryService) : AbstractProtectedApi() {
 
     companion object {
         val log : Logger = LoggerFactory.getLogger(CategoryProtectedController::class.java)
