@@ -58,6 +58,7 @@ dependencies {
     implementation('com.zaxxer:HikariCP:2.7.9')
     implementation('javax.transaction:jta:1.1')
     implementation('javax.transaction:javax.transaction-api:1.2')
+    implementation('com.fasterxml.jackson.module:jackson-module-kotlin')
 
 
 
