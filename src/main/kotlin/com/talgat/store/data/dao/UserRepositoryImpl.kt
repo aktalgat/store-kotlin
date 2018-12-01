@@ -6,7 +6,6 @@ import com.talgat.store.data.model.User
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
-import java.util.ArrayList
 
 @Repository
 @Transactional
@@ -19,7 +18,7 @@ class UserRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : UserRepositor
         val userList : List<User> = jdbcTemplate.query("$userQuery where phone=?", arrayOf<Any>(phone)) {rs, _ ->
             User(rs.getLong("id"), rs.getString("phone"), rs.getString("email"),
                     rs.getString("first_name"), rs.getString("last_name"), rs.getString("password"),
-                    rs.getBoolean("enabled"), ArrayList()) }
+                    rs.getBoolean("enabled"), listOf()) }
 
         if (userList.isEmpty()) return null
 
