@@ -3,6 +3,9 @@ DROP SCHEMA IF EXISTS core CASCADE;
 CREATE SCHEMA IF NOT EXISTS core AUTHORIZATION postgres;
 
 -- tables for core
+DROP TABLE IF EXISTS core.user_roles;
+DROP SEQUENCE IF EXISTS core.user_roles_seq;
+DROP TABLE IF EXISTS core.roles;
 DROP TABLE IF EXISTS core.users;
 DROP SEQUENCE IF EXISTS core.users_seq;
 
