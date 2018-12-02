@@ -26,7 +26,7 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
         try {
             newCategory = categoryRepository.save(category)
         } catch (e: Exception) {
-            throw InternalException("Internal error in saving")
+            throw InternalException(e.message ?: "Internal error in saving")
         }
 
         log.info("Saved category: {}", newCategory)

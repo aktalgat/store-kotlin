@@ -6,6 +6,7 @@ import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.support.GeneratedKeyHolder
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
+import java.sql.Statement
 
 @Repository
 @Transactional
@@ -21,9 +22,14 @@ class CategoryRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CategoryR
 
     override fun save(category: Category): Category {
         val holder = GeneratedKeyHolder()
-        jdbcTemplate.update(saveQuery, arrayOf(category.name), holder)
-        val id = holder.key?.toLong() ?: throw InternalException("Not inserted id for category")
+        jdbcTemplate.update({ connection ->
+            val ps = connection.prepareStatement(saveQuery, Statement.RETURN_GENERATED_KEYS)
+            ps.setString(1, category.name)
+            ps
+        }, holder)
+
+        val keys = holder.keys
+        val id: Long = keys?.get("id").toString().toLong()
         return category.copy(id = id)
     }
-
 }
