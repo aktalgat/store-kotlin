@@ -8,12 +8,12 @@ import org.springframework.transaction.annotation.Transactional
 @Repository
 @Transactional
 class CategoryRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CategoryRepository {
-    override fun findAll(): List<Category> {
-        TODO("not implemented")
-    }
+    private val query = "SELECT id, name FROM core.categories"
 
-    override fun findById(id: Long): Category? {
-        TODO("not implemented")
+    override fun findAll(): List<Category> {
+        return jdbcTemplate.query(query) {rs, _ ->
+            Category(rs.getString("name"), rs.getLong("id"))
+        }
     }
 
     override fun save(category: Category): Category {
