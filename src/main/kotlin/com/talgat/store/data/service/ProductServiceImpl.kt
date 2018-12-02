@@ -3,6 +3,7 @@ package com.talgat.store.data.service
 import com.talgat.store.api.payload.ProductRequest
 import com.talgat.store.data.dao.ProductRepository
 import com.talgat.store.data.model.Product
+import com.talgat.store.data.model.ProductImage
 import com.talgat.store.exception.InternalException
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -18,14 +19,14 @@ class ProductServiceImpl(private val productRepository: ProductRepository) : Pro
     }
 
     override fun saveProduct(productRequest: ProductRequest): Product {
+        val list = ArrayList<ProductImage>()
+        for (url in productRequest.productImageList) {
+            list.add(ProductImage(0, 0, url))
+        }
         val product = Product(0, productRequest.categoryId, productRequest.name, productRequest.description,
                 productRequest.shortDescription, productRequest.additionalInfo,
                 productRequest.badge, productRequest.price, productRequest.priceOld,
-                productRequest.stars, ArrayList())
-        /*val list: ImmutableList<ProductImage> = product.productImageList
-        for (url in productRequest.productImageList) {
-            list.add(ProductImage(0, url))
-        }*/
+                productRequest.stars, list)
 
         return saveProduct(product)
     }
@@ -36,7 +37,7 @@ class ProductServiceImpl(private val productRepository: ProductRepository) : Pro
             newProduct = productRepository.save(product)
         } catch (e: Exception) {
             log.error("error: {}", e.message)
-            throw InternalException("Internal error in saving")
+            throw InternalException(e.message ?: "Internal error in saving")
         }
 
         log.info("Saved product: {}", newProduct)

@@ -2,11 +2,11 @@ package com.talgat.store.data.dao
 
 import com.talgat.store.data.model.Product
 import com.talgat.store.data.model.ProductImage
-import com.talgat.store.exception.InternalException
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.jdbc.support.GeneratedKeyHolder
 import org.springframework.stereotype.Repository
 import org.springframework.transaction.annotation.Transactional
+import java.sql.Statement
 
 @Repository
 @Transactional
@@ -20,10 +20,21 @@ class ProductRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : ProductRep
 
     override fun save(product: Product): Product {
         val holder = GeneratedKeyHolder()
-        jdbcTemplate.update(saveQuery, arrayOf(product.categoryId, product.name, product.description,
-                product.description, product.shortDescription, product.additionalInfo, product.badge, product.price,
-                product.priceOld, product.stars), holder)
-        val id: Long = holder.key?.toLong() ?: throw InternalException("Not inserted id for product")
+        jdbcTemplate.update({ connection ->
+            val ps = connection.prepareStatement(saveQuery, Statement.RETURN_GENERATED_KEYS)
+            ps.setLong(1, product.categoryId)
+            ps.setString(2, product.name)
+            ps.setString(3, product.description)
+            ps.setString(4, product.shortDescription)
+            ps.setString(5, product.additionalInfo)
+            ps.setString(6, product.badge)
+            ps.setDouble(7, product.price)
+            ps.setDouble(8, product.priceOld)
+            ps.setInt(9, product.stars)
+            ps
+        }, holder)
+        val keys = holder.keys
+        val id: Long = keys?.get("id").toString().toLong()
 
         val list = product.productImageList.map {
             arrayOf(id, it.url)
