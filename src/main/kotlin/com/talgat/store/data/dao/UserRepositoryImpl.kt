@@ -15,7 +15,19 @@ class UserRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : UserRepositor
     private val roleQuery = "SELECT r.id, r.name FROM core.user_roles ur INNER JOIN core.roles r on ur.role_id=r.id"
 
     override fun findByPhone(phone: String): User? {
-        val userList : List<User> = jdbcTemplate.query("$userQuery where phone=?", arrayOf<Any>(phone)) {rs, _ ->
+        return find("where phone=?", phone)
+    }
+
+    override fun save(user: User) {
+
+    }
+
+    override fun findById(id: Long): User? {
+        return find("where id=?", id)
+    }
+
+    fun find(queryEnd: String, param: Any): User? {
+        val userList : List<User> = jdbcTemplate.query("$userQuery $queryEnd", arrayOf(param)) {rs, _ ->
             User(rs.getLong("id"), rs.getString("phone"), rs.getString("email"),
                     rs.getString("first_name"), rs.getString("last_name"), rs.getString("password"),
                     rs.getBoolean("enabled"), listOf()) }
@@ -27,14 +39,5 @@ class UserRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : UserRepositor
         }
 
         return userList[0].copy(roles = roleList)
-    }
-
-    override fun save(user: User) {
-
-    }
-
-    override fun findById(id: Long): User? {
-
-        return null
     }
 }
