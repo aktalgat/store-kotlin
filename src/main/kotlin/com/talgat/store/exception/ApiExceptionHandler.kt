@@ -5,7 +5,6 @@ import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.http.converter.HttpMessageNotReadableException
 import org.springframework.security.authentication.BadCredentialsException
-import org.springframework.security.authentication.InternalAuthenticationServiceException
 import org.springframework.web.bind.MethodArgumentNotValidException
 import org.springframework.web.bind.annotation.ControllerAdvice
 import org.springframework.web.bind.annotation.ExceptionHandler
@@ -33,11 +32,6 @@ class ApiExceptionHandler : ResponseEntityExceptionHandler() {
     fun errorRunProcessHandle(ex: InternalException): ResponseEntity<Any> {
         return buildResponseEntity(ApiExceptionResponse(HttpStatus.INTERNAL_SERVER_ERROR.value(),
                 HttpStatus.INTERNAL_SERVER_ERROR, ex.message ?: ""))
-    }
-
-    @ExceptionHandler(InternalAuthenticationServiceException::class)
-    fun errorAuthenticationHandle(ex: InternalAuthenticationServiceException): ResponseEntity<Any> {
-        return buildResponseEntity(ApiExceptionResponse(HttpStatus.UNAUTHORIZED.value(), HttpStatus.UNAUTHORIZED, ex.message ?: ""))
     }
 
     @ExceptionHandler(BadCredentialsException::class)
