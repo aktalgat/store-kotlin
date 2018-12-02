@@ -23,7 +23,7 @@ class ProductRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : ProductRep
         jdbcTemplate.update(saveQuery, arrayOf(product.categoryId, product.name, product.description,
                 product.description, product.shortDescription, product.additionalInfo, product.badge, product.price,
                 product.priceOld, product.stars), holder)
-        val id: Long = holder.key?.toLong() ?: throw InternalException("Not inserted id fo product")
+        val id: Long = holder.key?.toLong() ?: throw InternalException("Not inserted id for product")
 
         val list = product.productImageList.map {
             arrayOf(id, it.url)
