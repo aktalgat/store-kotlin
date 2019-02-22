@@ -35,7 +35,10 @@ class CategoryProtectedController(private val categoryService: CategoryService) 
     @PutMapping("/categories")
     fun updateCategory(@Valid @RequestBody categoryRequest: CategoryRequest): ItemResponse {
         log.info("Request for update category")
+        log.info("Category for update {}", categoryRequest)
 
-        return ItemResponse("Category updated", 0L)
+        val category = categoryService.updateCategory(categoryRequest)
+
+        return ItemResponse("Category updated", category.id)
     }
 }
