@@ -6,14 +6,11 @@ import com.talgat.store.data.model.Product
 import com.talgat.store.data.service.ProductService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
-import org.springframework.web.bind.annotation.GetMapping
-import org.springframework.web.bind.annotation.PostMapping
-import org.springframework.web.bind.annotation.RequestBody
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.web.bind.annotation.*
 import javax.validation.Valid
 
 @RestController
-class ProductProtectedController(private val productService: ProductService) : AbstractProtectedApi() {
+class ProductProtectedController(private val productService: ProductService): AbstractProtectedApi() {
 
     companion object {
         val log : Logger = LoggerFactory.getLogger(ProductProtectedController::class.java)
@@ -30,8 +27,18 @@ class ProductProtectedController(private val productService: ProductService) : A
     fun saveProduct(@Valid @RequestBody productRequest: ProductRequest): ItemResponse {
         log.info("Request for saving product")
         log.info("Product request: {}", productRequest)
-        val (id) = productService.saveProduct(productRequest)
+        val product = productService.saveProduct(productRequest)
+
+        return ItemResponse("Product saved", product.id)
+    }
+
+    @PutMapping("/products")
+    fun updateProduct(@Valid @RequestBody productRequest: ProductRequest): ItemResponse {
+        log.info("Request for saving product")
+        log.info("Product request: {}", productRequest)
+        val id = 0L
 
         return ItemResponse("Product saved", id)
     }
+
 }
