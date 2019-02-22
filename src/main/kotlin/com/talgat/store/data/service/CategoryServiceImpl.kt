@@ -22,7 +22,7 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
     }
 
     override fun saveCategory(category: Category): Category {
-        var newCategory: Category?
+        val newCategory: Category?
         try {
             newCategory = categoryRepository.save(category)
         } catch (e: Exception) {
@@ -35,5 +35,14 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
 
     override fun getCategoryList(): List<Category> {
         return categoryRepository.findAll()
+    }
+
+    override fun updateCategory(categoryRequest: CategoryRequest): Category {
+        val category = Category(categoryRequest.name, categoryRequest.id)
+        categoryRepository.update(category)
+
+        log.info("Updated category: {}", category)
+        return category
+
     }
 }

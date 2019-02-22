@@ -7,4 +7,5 @@ interface CategoryService {
     fun getCategoryList(): List<Category>
     fun saveCategory(categoryRequest: CategoryRequest): Category
     fun saveCategory(category: Category): Category
+    fun updateCategory(categoryRequest: CategoryRequest): Category
 }
