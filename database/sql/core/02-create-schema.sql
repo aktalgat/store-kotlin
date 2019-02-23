@@ -72,6 +72,7 @@ CREATE SEQUENCE core.categories_seq INCREMENT 1 MINVALUE 1 MAXVALUE 922337203685
 CREATE TABLE core.categories(
   id BIGINT DEFAULT nextval('core.categories_seq') NOT NULL,
   name VARCHAR(40),
+  blocked BOOLEAN default false,
 
   CONSTRAINT pk_categories PRIMARY KEY(id)
 );
