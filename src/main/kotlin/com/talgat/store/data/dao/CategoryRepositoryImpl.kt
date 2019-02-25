@@ -12,14 +12,14 @@ import java.sql.Statement
 @Repository
 @Transactional
 class CategoryRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CategoryRepository {
-    private val query = "SELECT id, name FROM core.categories"
+    private val query = "SELECT id, name, blocked FROM core.categories"
     private val saveQuery = "INSERT INTO core.categories(name) VALUES (?)"
-    private val updateQuery = "UPDATE core.categories set name=? WHERE id=?"
-    private val queryById = "SELECT id, name FROM core.categories WHERE id=?"
+    private val updateQuery = "UPDATE core.categories set name=?, blocked=? WHERE id=?"
+    private val queryById = "SELECT id, name, blocked FROM core.categories WHERE id=?"
 
     override fun findAll(): List<Category> {
         return jdbcTemplate.query(query) {rs, _ ->
-            Category(rs.getString("name"), rs.getLong("id"))
+            Category(rs.getString("name"), rs.getLong("id"), rs.getBoolean("blocked"))
         }
     }
 
@@ -38,7 +38,7 @@ class CategoryRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CategoryR
 
     override fun findById(id: Long): Category {
         return jdbcTemplate.query(queryById) {rs, _ ->
-            Category(rs.getString("name"), rs.getLong("id"))
+            Category(rs.getString("name"), rs.getLong("id"), rs.getBoolean("blocked"))
         }[0]
     }
 
@@ -46,7 +46,8 @@ class CategoryRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CategoryR
         jdbcTemplate.update { connection ->
             val ps = connection.prepareStatement(updateQuery)
             ps.setString(1, category.name)
-            ps.setLong(2, category.id)
+            ps.setBoolean(2, category.blocked)
+            ps.setLong(3, category.id)
             ps
         }
     }
