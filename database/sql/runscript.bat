@@ -12,7 +12,7 @@ if [%2]==[] goto finish
 
 echo dbname %dbname%
 
-set pgpath=C:\Program Files\PostgreSQL\10\bin
+set pgpath=C:\PostgreSQL\pg11\bin
 set PGPASSWORD=%pass%
 set PGCLIENTENCODING=UTF-8
 setlocal enabledelayedexpansion
