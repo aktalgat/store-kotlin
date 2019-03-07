@@ -4,8 +4,8 @@ REM runscript.bat store superpass > log.txt 2>&1
 set dbname=%1
 set pass=%2
 
-set path=%~dp0
-set scriptpath=%path:~0,-1%
+set dirpath=%~dp0
+set scriptpath=!dirpath:\=\\!
 
 if [%1]==[] goto finish
 if [%2]==[] goto finish
@@ -21,10 +21,10 @@ setlocal enabledelayedexpansion
 
 "%pgpath%\dropdb.exe" -U postgres  %dbname%
 
-"%pgpath%\psql.exe" -U postgres -c "\i '%scriptpath%/core/01-create-db.sql'"
-"%pgpath%\psql.exe" -U postgres -d %dbname% -c "\i '%scriptpath%/core/02-create-schema.sql'"
+"%pgpath%\psql.exe" -U postgres -c "\i '%scriptpath%\\core\\01-create-db.sql'"
+"%pgpath%\psql.exe" -U postgres -d %dbname% -c "\i '%scriptpath%\\core\\02-create-schema.sql'"
 
-for /R %scriptpath%\\initial-data\\ %%f in (*.sql) do (
+for /R %dirpath%\\initial-data\\ %%f in (*.sql) do (
 	set var=%%f
     set var1=!var:\=\\!
     echo ---------------------------------------------------------------
