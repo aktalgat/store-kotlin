@@ -35,7 +35,7 @@ class UserPrincipal(
     companion object {
 
         fun create(user: User): UserPrincipal {
-            val  authorities = user.roles.map { it ->
+            val  authorities = user.roles.map {
                 SimpleGrantedAuthority(it.name.name)
             }
 
