@@ -25,7 +25,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource
 @Configuration
 @EnableWebSecurity
 class SecurityConfig(private val customUserDetailsService: CustomUserDetailsService,
-                     private val unauthorizedHandler: JwtAuthenticationEntryPoint, private val tokenProvider: JwtTokenProvider) : WebSecurityConfigurerAdapter() {
+                     private val unauthorizedHandler: JwtAuthenticationEntryPoint,
+                     private val tokenProvider: JwtTokenProvider) : WebSecurityConfigurerAdapter() {
     @Value("\${app.origin}")
     private val origin: String? = null
 

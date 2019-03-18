@@ -13,6 +13,7 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 
 @ControllerAdvice
 class ApiExceptionHandler : ResponseEntityExceptionHandler() {
+
     override fun handleHttpMessageNotReadable(ex: HttpMessageNotReadableException,
                                               headers: HttpHeaders, status: HttpStatus,
                                               request: WebRequest): ResponseEntity<Any> {

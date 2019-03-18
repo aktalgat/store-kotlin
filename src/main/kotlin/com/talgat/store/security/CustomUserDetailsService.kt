@@ -14,6 +14,7 @@ class CustomUserDetailsService(private val userRepository: UserRepository) : Use
     companion object {
         val log : Logger = LoggerFactory.getLogger(CustomUserDetailsService::class.java)
     }
+
     @Throws(UsernameNotFoundException::class)
     override fun loadUserByUsername(phone: String): UserDetails {
         log.info("Find user by phone: {}", phone)

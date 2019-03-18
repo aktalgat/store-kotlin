@@ -10,7 +10,6 @@ import org.springframework.transaction.annotation.Transactional
 @Repository
 @Transactional
 class UserRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : UserRepository {
-
     private val userQuery = "SELECT id, phone, first_name, last_name, password, email, enabled FROM core.users"
     private val roleQuery = "SELECT r.id, r.name FROM core.user_roles ur INNER JOIN core.roles r on ur.role_id=r.id"
 
