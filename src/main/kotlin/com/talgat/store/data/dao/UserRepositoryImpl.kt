@@ -12,9 +12,14 @@ import org.springframework.transaction.annotation.Transactional
 class UserRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : UserRepository {
     private val userQuery = "SELECT id, phone, first_name, last_name, password, email, enabled FROM core.users"
     private val roleQuery = "SELECT r.id, r.name FROM core.user_roles ur INNER JOIN core.roles r on ur.role_id=r.id"
+    private val userQueryByEmail = "SELECT r.id, r.name FROM core.user_roles ur INNER JOIN core.roles r on ur.role_id=r.id"
 
     override fun findByPhone(phone: String): User? {
         return find("where phone=?", phone)
+    }
+
+    override fun findByEmail(email: String): User? {
+        return find("where email=?", email);
     }
 
     override fun save(user: User) {
