@@ -12,10 +12,12 @@ import java.sql.Statement
 @Repository
 @Transactional
 class CategoryRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CategoryRepository {
+    private val deleteStatus = 1
     private val query = "SELECT id, name FROM core.categories"
     private val saveQuery = "INSERT INTO core.categories(name) VALUES (?)"
-    private val updateQuery = "UPDATE core.categories set name=? WHERE id=?"
+    private val updateQuery = "UPDATE core.categories SET name=? WHERE id=?"
     private val queryById = "SELECT id, name FROM core.categories WHERE id=?"
+    private val deleteQuery = "UPDATE core.categories SET status=? WHERE id=?"
 
     override fun findAll(): List<Category> {
         return jdbcTemplate.query(query) {rs, _ ->
@@ -48,5 +50,15 @@ class CategoryRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CategoryR
             ps.setString(1, category.name)
             ps
         }
+    }
+
+    override fun delete(id: Long): Boolean {
+        val updatedRowCount = jdbcTemplate.update { connection: Connection ->
+            val ps = connection.prepareStatement(deleteQuery)
+            ps.setInt(1, deleteStatus)
+            ps.setLong(2, id)
+            ps
+        }
+        return updatedRowCount == 1
     }
 }

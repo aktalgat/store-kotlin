@@ -7,4 +7,5 @@ interface CategoryRepository {
     fun save(category: Category): Category
     fun findById(id: Long): Category
     fun update(category: Category)
+    fun delete(id: Long): Boolean
 }
