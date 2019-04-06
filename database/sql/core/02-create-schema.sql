@@ -72,7 +72,7 @@ CREATE SEQUENCE core.categories_seq INCREMENT 1 MINVALUE 1 MAXVALUE 922337203685
 CREATE TABLE core.categories(
   id BIGINT DEFAULT nextval('core.categories_seq') NOT NULL,
   name VARCHAR(40),
-  blocked BOOLEAN default false,
+  status SMALLINT,
 
   CONSTRAINT pk_categories PRIMARY KEY(id)
 );
@@ -94,6 +94,7 @@ CREATE TABLE core.products(
   price REAL,
   price_old REAL,
   stars SMALLINT,
+  status SMALLINT,
 
   CONSTRAINT pk_products PRIMARY KEY(id),
   CONSTRAINT fk_products_category_id FOREIGN KEY (category_id) REFERENCES core.categories(id)
