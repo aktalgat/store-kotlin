@@ -48,4 +48,8 @@ class ProductServiceImpl(private val productRepository: ProductRepository) : Pro
     override fun getProductList(): List<Product> {
         return productRepository.findAll()
     }
+
+    override fun deleteProduct(id: Long): Boolean {
+        return productRepository.delete(id)
+    }
 }
