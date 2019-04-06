@@ -38,7 +38,15 @@ class ProductProtectedController(private val productService: ProductService): Ab
         log.info("Product request: {}", productRequest)
         val id = 0L
 
-        return ItemResponse("Product saved", id)
+        return ItemResponse("Product updated", id)
     }
 
+    @DeleteMapping("/products/{id}")
+    fun deleteProduct(@PathVariable id: Long): ItemResponse {
+        log.info("Request for deleting product")
+        log.info("Delete product request: {}", id)
+        val deleted = productService.deleteProduct(id)
+
+        return ItemResponse(if (deleted) "Product deleted" else "Not deleted", id)
+    }
 }
