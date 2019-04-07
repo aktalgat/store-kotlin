@@ -8,4 +8,5 @@ interface CategoryService {
     fun saveCategory(categoryRequest: CategoryRequest): Category
     fun saveCategory(category: Category): Category
     fun updateCategory(categoryRequest: CategoryRequest): Category
+    fun deleteCategory(id: Long): Boolean
 }

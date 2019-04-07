@@ -45,4 +45,8 @@ class CategoryServiceImpl(private val categoryRepository: CategoryRepository) : 
         return category
 
     }
+
+    override fun deleteCategory(id: Long): Boolean {
+        return categoryRepository.delete(id)
+    }
 }
