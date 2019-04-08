@@ -41,4 +41,13 @@ class CategoryProtectedController(private val categoryService: CategoryService) 
 
         return ItemResponse("Category updated", category.id)
     }
+
+    @DeleteMapping("/categories")
+    fun deleteCategory(@PathVariable id: Long): ItemResponse {
+        log.info("Request for deleting category")
+        log.info("Delete category request: {}", id)
+        val deleted = categoryService.deleteCategory(id)
+
+        return ItemResponse(if (deleted) "Category deleted" else "Not deleted", id)
+    }
 }
