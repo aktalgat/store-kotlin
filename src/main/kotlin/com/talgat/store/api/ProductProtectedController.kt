@@ -32,11 +32,10 @@ class ProductProtectedController(private val productService: ProductService): Ab
         return ItemResponse("Product saved", product.id)
     }
 
-    @PutMapping("/products")
-    fun updateProduct(@Valid @RequestBody productRequest: ProductRequest): ItemResponse {
-        log.info("Request for saving product")
+    @PutMapping("/products/{id}")
+    fun updateProduct(@Valid @RequestBody productRequest: ProductRequest, @PathVariable id: Long): ItemResponse {
+        log.info("Request for updating product")
         log.info("Product request: {}", productRequest)
-        val id = 0L
 
         return ItemResponse("Product updated", id)
     }
