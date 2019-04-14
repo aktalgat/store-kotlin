@@ -11,5 +11,5 @@ data class ProductRequest(
         val price: Double,
         val priceOld: Double,
         val stars: Int,
-        val productImageList: List<String>
+        val productImageList: List<ProductImage>
 )
