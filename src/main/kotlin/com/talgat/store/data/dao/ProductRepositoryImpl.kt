@@ -20,6 +20,8 @@ class ProductRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : ProductRep
             "additional_info, badge, price, price_old, stars) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
     private val imageInsertQuery = "INSERT INTO core.product_images(product_id, url) VALUES (?, ?)"
     private val deleteQuery = "UPDATE core.products SET status=? WHERE id=?"
+    private val updateQuery = "UPDATE core.products SET category_id=?, name=?, description=?, short_description=?, " +
+            "additional_info=?, badge=?, price=?, price_old=?, stars=? WHERE id=?"
 
     override fun save(product: Product): Product {
         val holder = GeneratedKeyHolder()
@@ -72,5 +74,28 @@ class ProductRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : ProductRep
             ps
         }
         return updatedRowCount == 1
+    }
+
+    override fun update(product: Product): Product {
+        jdbcTemplate.update { connection ->
+            val ps = connection.prepareStatement(updateQuery)
+            ps.setLong(1, product.categoryId)
+            ps.setString(2, product.name)
+            ps.setString(3, product.description)
+            ps.setString(4, product.shortDescription)
+            ps.setString(5, product.additionalInfo)
+            ps.setString(6, product.badge)
+            ps.setDouble(7, product.price)
+            ps.setDouble(8, product.priceOld)
+            ps.setInt(9, product.stars)
+            ps
+        }
+
+        val list = product.productImageList.map {
+            arrayOf(product.id, it.url)
+        }
+        jdbcTemplate.batchUpdate(imageInsertQuery, list)
+
+        return product
     }
 }
