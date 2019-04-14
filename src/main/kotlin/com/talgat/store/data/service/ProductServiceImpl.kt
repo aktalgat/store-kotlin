@@ -18,17 +18,19 @@ class ProductServiceImpl(private val productRepository: ProductRepository) : Pro
         val log : Logger = LoggerFactory.getLogger(ProductServiceImpl::class.java)
     }
 
-    override fun saveProduct(productRequest: ProductRequest): Product {
+    fun createProduct(productRequest: ProductRequest): Product {
         val list = ArrayList<ProductImage>()
         for (url in productRequest.productImageList) {
             list.add(ProductImage(0, 0, url))
         }
-        val product = Product(0, productRequest.categoryId, productRequest.name, productRequest.description,
+        return Product(0, productRequest.categoryId, productRequest.name, productRequest.description,
                 productRequest.shortDescription, productRequest.additionalInfo,
                 productRequest.badge, productRequest.price, productRequest.priceOld,
                 productRequest.stars, list)
+    }
 
-        return saveProduct(product)
+    override fun saveProduct(productRequest: ProductRequest): Product {
+        return saveProduct(createProduct(productRequest))
     }
 
     override fun saveProduct(product: Product): Product {
@@ -51,5 +53,9 @@ class ProductServiceImpl(private val productRepository: ProductRepository) : Pro
 
     override fun deleteProduct(id: Long): Boolean {
         return productRepository.delete(id)
+    }
+
+    override fun updateProduct(productRequest: ProductRequest): Product {
+        return productRepository.update(createProduct(productRequest))
     }
 }

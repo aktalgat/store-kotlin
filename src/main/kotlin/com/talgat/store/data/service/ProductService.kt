@@ -8,4 +8,5 @@ interface ProductService {
     fun saveProduct(productRequest: ProductRequest): Product
     fun saveProduct(product: Product): Product
     fun deleteProduct(id: Long): Boolean
+    fun updateProduct(productRequest: ProductRequest): Product
 }
