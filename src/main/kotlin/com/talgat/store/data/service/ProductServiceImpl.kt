@@ -20,10 +20,10 @@ class ProductServiceImpl(private val productRepository: ProductRepository) : Pro
 
     fun createProduct(productRequest: ProductRequest): Product {
         val list = ArrayList<ProductImage>()
-        for (url in productRequest.productImageList) {
-            list.add(ProductImage(0, 0, url))
+        for (image in productRequest.productImageList) {
+            list.add(ProductImage(image.id, productRequest.id, image.url))
         }
-        return Product(0, productRequest.categoryId, productRequest.name, productRequest.description,
+        return Product(productRequest.id, productRequest.categoryId, productRequest.name, productRequest.description,
                 productRequest.shortDescription, productRequest.additionalInfo,
                 productRequest.badge, productRequest.price, productRequest.priceOld,
                 productRequest.stars, list)
