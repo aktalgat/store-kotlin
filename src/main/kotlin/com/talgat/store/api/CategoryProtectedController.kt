@@ -32,17 +32,17 @@ class CategoryProtectedController(private val categoryService: CategoryService) 
         return ItemResponse("Category saved", category.id)
     }
 
-    @PutMapping("/categories")
-    fun updateCategory(@Valid @RequestBody categoryRequest: CategoryRequest): ItemResponse {
+    @PutMapping("/categories/{id}")
+    fun updateCategory(@Valid @RequestBody categoryRequest: CategoryRequest, @PathVariable id: Long): ItemResponse {
         log.info("Request for update category")
         log.info("Category for update {}", categoryRequest)
 
-        val category = categoryService.updateCategory(categoryRequest)
+        categoryService.updateCategory(categoryRequest)
 
-        return ItemResponse("Category updated", category.id)
+        return ItemResponse("Category updated", id)
     }
 
-    @DeleteMapping("/categories")
+    @DeleteMapping("/categories/{id}")
     fun deleteCategory(@PathVariable id: Long): ItemResponse {
         log.info("Request for deleting category")
         log.info("Delete category request: {}", id)
