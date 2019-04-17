@@ -13,7 +13,7 @@ import java.sql.Statement
 @Transactional
 class CategoryRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CategoryRepository {
     private val deleteStatus = 1
-    private val query = "SELECT id, name FROM core.categories"
+    private val query = "SELECT id, name FROM core.categories WHERE status=0"
     private val saveQuery = "INSERT INTO core.categories(name) VALUES (?)"
     private val updateQuery = "UPDATE core.categories SET name=? WHERE id=?"
     private val queryById = "SELECT id, name FROM core.categories WHERE id=?"
