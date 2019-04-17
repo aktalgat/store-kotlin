@@ -14,7 +14,7 @@ import java.sql.Statement
 class ProductRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : ProductRepository {
     private val deleteStatus = 1
     private val selectQuery = "SELECT id, category_id, name, description, short_description, additional_info, " +
-                    "badge, price, price_old, stars FROM core.products"
+                    "badge, price, price_old, stars FROM core.products WHERE status=0"
     private val selectImageQuery = "SELECT id, product_id, url FROM core.product_images"
     private val insertQuery = "INSERT INTO core.products(category_id, name, description, short_description, " +
             "additional_info, badge, price, price_old, stars) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
