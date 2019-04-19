@@ -48,6 +48,7 @@ class CategoryRepositoryImpl(private val jdbcTemplate: JdbcTemplate) : CategoryR
         jdbcTemplate.update { connection ->
             val ps = connection.prepareStatement(updateQuery)
             ps.setString(1, category.name)
+            ps.setLong(2, category.id)
             ps
         }
     }
